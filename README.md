@@ -1,4 +1,4 @@
-# Simple Dockerized CRUD Node.js Web App & Unit Tests
+# Simple Dockerized CRUD Node.js Web App
 
 ## How to start
 - `docker build postman-example .`
