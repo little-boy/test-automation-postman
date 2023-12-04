@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 // uri from mongo atlas cloud db
-var uri = "mongodb+srv://buraker:nodejsdemo@cluster0.5otud.mongodb.net/mongoDbTest?retryWrites=true&w=majority"
+var uri = "mongodb://root:example@mongo:27017/mongoDbTest?authSource=admin&retryWrites=true&w=majority"
 
 // Declare a variable named option and assign optional settings
 const options = {
@@ -18,6 +18,7 @@ mongoose.connect(uri, options).then(() => {
     err => {
         {
             console.log("Error connecting Database instance due to:", err);
+            process.exit(1)
         }
     });
 

@@ -7,21 +7,16 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 const session = require("express-session");
 const User = require('./models/user.js');
+const bodyParser = require('body-parser')
 var bcrypt = require('bcryptjs');
+
+app.use(bodyParser.json());
 
 require('./config/db.config');
 require('./config/auth.config');
 require('./routes/user.routes.js')(app);
 
 //swagger setup
-const {swaggerUi, swaggerSpecs} = require('./config/swagger.config');
-
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpecs, { explorer: true })
-);
-
 app.listen(port, () => {
   console.log("Server Started On.. http://localhost:" + port);
 });

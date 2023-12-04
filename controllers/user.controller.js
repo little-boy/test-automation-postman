@@ -1,4 +1,5 @@
 var User = require("../models/user");
+const serialize_user = require('../models/user.serializer')
 
 exports.findUserByName = (req, res) => {
   const name = req.params.username;
@@ -24,7 +25,7 @@ exports.findUserById = (req, res) => {
     .then(data => {
       if (!data)
         res.status(404).send({ message: "User not found with id: " + id });
-      else res.send(data);
+      else res.send(serialize_user(data));
     })
     .catch(err => {
       res
@@ -61,10 +62,11 @@ exports.createNewUser = (req, res) => {
     email: req.body.email,
     password: req.body.password
   });
+
   userData
     .save()
     .then((data) => {
-      res.send(data);
+      res.send(serialize_user(data));
     })
     .catch((err) => {
       res.status(500).send({

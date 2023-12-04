@@ -14,5 +14,7 @@ const UserSchema = mongoose.Schema({
     }
 });
 
+
+
 UserSchema.plugin(uniqueValidator, { message: 'Email already in use.' });
 module.exports = mongoose.model('users', UserSchema);
