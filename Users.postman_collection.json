@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "2723c91a-bcfc-438d-a9d4-c864ef0989ea",
+		"name": "Users",
+		"description": "Routes CRUD + Diverses opérations sur l'entité User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "57763"
+	},
+	"item": [
+		{
+			"name": "List users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Should equal user previously created\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"",
+							"    // tester que l'utilisateur préalablement créé, existe dans la liste",
+							"    ",
+							"   /* const expected_result = {",
+							"        \"id\": pm.variables.get('TEST_id'),",
+							"        \"email\": pm.variables.get('TEST_email'),",
+							"        \"username\": pm.variables.get('TEST_username'),",
+							"    }",
+							"    ",
+							"    pm.expect(jsonData).to.eql([expected_result])*/",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{USER_API_URL}}/users",
+					"host": [
+						"{{USER_API_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "- Création d'un utilisateur,\n    \n- Vérification de l'unicité,\n    \n- pas de vérification de la complexité du mot de passe"
+			},
+			"response": []
+		},
+		{
+			"name": "Create a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Should contains only id, username, email\", function () {",
+							"    // sortie de l'appel HTTP",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    // vérifie que le code http de sortie est en succès",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"",
+							"    // vérifie que les clés de l'objet de sortie contiennent exclusivement",
+							"    // id, username, email",
+							"    const keys = Object.keys(jsonData)",
+							"    pm.expect(keys).to.have.members(['id', 'username', 'email'])",
+							"",
+							"    // stocke l'id récupéré en sortie de la création du user dans l'ENV",
+							"    pm.environment.set(\"TEST_id\", jsonData.id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{TEST_username}}\",\n    \"email\": \"{{TEST_email}}\",\n    \"password\": \"{{TEST_password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{USER_API_URL}}/users",
+					"host": [
+						"{{USER_API_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read a user by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Should equal user previously created\", function () {",
+							"    var jsonData = pm.response.json();",
+							"",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"    ",
+							"    // vérifie que jsonData === l'utilisateur créé",
+							"    const expected_result = {",
+							"        \"id\": pm.variables.get('TEST_id'),",
+							"        \"email\": pm.variables.get('TEST_email'),",
+							"        \"username\": pm.variables.get('TEST_username'),",
+							"    }",
+							"    ",
+							"    // https://www.chaijs.com/api/bdd/ assertion list",
+							"    pm.expect(jsonData).to.eql(expected_result)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{USER_API_URL}}/users/{{TEST_id}}",
+					"host": [
+						"{{USER_API_URL}}"
+					],
+					"path": [
+						"users",
+						"{{TEST_id}}"
+					]
+				},
+				"description": "- Création d'un utilisateur,\n    \n- Vérification de l'unicité,\n    \n- pas de vérification de la complexité du mot de passe"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Jenny\",\n    \"email\": \"jenny@doe.fr\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{USER_API_URL}}/users/{{TEST_id}}",
+					"host": [
+						"{{USER_API_URL}}"
+					],
+					"path": [
+						"users",
+						"{{TEST_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{USER_API_URL}}/users/{{TEST_id}}",
+					"host": [
+						"{{USER_API_URL}}"
+					],
+					"path": [
+						"users",
+						"{{TEST_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

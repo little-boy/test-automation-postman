@@ -9,3 +9,6 @@ module.exports = (app) => {
   app.put("/users/:id", User.updateById);
   app.delete("/users/:id", User.deleteUserById);
 };
+
+// route (= url + verbe)
+// arguments (= body, header, ...)

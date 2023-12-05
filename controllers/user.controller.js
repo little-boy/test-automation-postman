@@ -66,7 +66,8 @@ exports.createNewUser = (req, res) => {
   userData
     .save()
     .then((data) => {
-      res.send(serialize_user(data));
+      const user = serialize_user(data)
+      res.send(user);
     })
     .catch((err) => {
       res.status(500).send({

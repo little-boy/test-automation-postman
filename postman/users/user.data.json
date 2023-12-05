@@ -3,5 +3,15 @@
     "TEST_username": "jane",
     "TEST_email": "jane@doe.fr",
     "TEST_password": "12345678"
+  },
+  {
+    "TEST_username": "jaja",
+    "TEST_email": "JAJA@doe.fr",
+    "TEST_password": "12345678"
+  },
+  {
+    "TEST_username": "jiji",
+    "TEST_email": "jiji@doe",
+    "TEST_password": "12345678"
   }
 ]
